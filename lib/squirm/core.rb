@@ -11,8 +11,8 @@ module Squirm
     # Establishes a connection pool.
     # @param [Hash] options The connection options
     # @option options [String] :pool Use the given pool rather than Squirm's.
-    # @option options [Fixnum] :timeout The pool timeout.
-    # @option options [Fixnum] :pool_size The pool size.
+    # @option options [Integer] :timeout The pool timeout.
+    # @option options [Integer] :pool_size The pool size.
     def connect(options = {})
       return @pool = options[:pool] if options[:pool]
       options   = options.dup
@@ -20,7 +20,7 @@ module Squirm
       pool_size = options.delete(:pool_size) || 1
       @pool     = Squirm::Pool.new(timeout)
       pool_size.times do
-        conn = PGconn.open(options)
+        conn = PG::Connection.open(options)
         yield conn if block_given?
         @pool.checkin conn
       end
@@ -83,7 +83,7 @@ module Squirm
     # Quotes an SQL identifier.
     # @return [String] The identifier.
     def quote_ident(*args)
-      PGconn.quote_ident(*args.map(&:to_s))
+      PG::Connection.quote_ident(*args.map(&:to_s))
     end
   end
 end

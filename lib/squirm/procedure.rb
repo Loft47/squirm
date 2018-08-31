@@ -183,14 +183,14 @@ module Squirm
 
       # Gets an argument's Postgres type by index or offset.
       # @overload [](offset)
-      #   @param [Fixnum] offset The argument's offset
+      #   @param [Integer] offset The argument's offset
       # @overload [](key)
       #   @param [String] key The argument's name
       # @example
       #   arguments[0]            #=> "text"
       #   arguments["created_at"] #=> "timestamp with time zone"
       def [](key)
-        (key.kind_of?(Fixnum) ? keys : hash)[key]
+        (key.kind_of?(Integer) ? keys : hash)[key]
       end
 
       # Gets Postgres-formatted params for use in calling the procedure.
