@@ -3,8 +3,8 @@ SELECT p.proname AS "name",
   pg_catalog.pg_get_function_arguments(p.oid) AS "arguments",
   p.proargtypes AS "argtypes",
   CASE
-    WHEN p.proisagg THEN 'agg'
-    WHEN p.proiswindow THEN 'window'
+		WHEN p.prokind = 'a' THEN 'agg'
+		WHEN p.prokind = 'w' THEN 'window'
     WHEN p.prorettype = 'pg_catalog.trigger'::pg_catalog.regtype THEN 'trigger'
     ELSE 'normal'
   END AS "procedure_type"
